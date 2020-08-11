@@ -7,11 +7,11 @@ namespace WebAddressBookTests
     public class ContactsCreationTests : TestBase
     {
         [Test]
-        public void TheUntitledTestCase2Test()
+        public void ContactCreationTest()
         {
-            OpenHomePage();
-            Login(new AccountData("admin", "secret"));
-            InitContactCreation();
+            navigationHelper.GoToHomePage();
+            loginHelper.Login(new AccountData("admin", "secret"));
+            contactHelper.InitContactCreation();
             ContactData contact = new ContactData("FirstName", "LastName");
             contact.MiddleName = "TestMiddleName";
             contact.NickName = "TestNickName";
@@ -33,9 +33,9 @@ namespace WebAddressBookTests
             contact.SecondAddress = "TestSecondAddress";
             contact.SecondHome = "TestSecondHome";
             contact.Notes = "TestNotes";
-            FillContactForm(contact);
-            SubmitContactCreation();
-            ReturnToHomePage();
+            contactHelper.FillContactForm(contact);
+            contactHelper.SubmitContactCreation();
+            contactHelper.ReturnToHomePage();
         }
     }
 }
