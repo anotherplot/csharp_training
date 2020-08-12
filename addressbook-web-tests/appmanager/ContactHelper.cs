@@ -10,9 +10,53 @@ namespace WebAddressBookTests
         {
         }
 
-        public void ReturnToHomePage()
+        public ContactHelper Create(ContactData contact)
         {
-            driver.FindElement(By.LinkText("home page")).Click();
+            FillContactForm(contact);
+            SubmitContactCreation();
+            manager.Navigator.ReturnToHomePage();
+            return this;
+        }
+        
+        public ContactHelper Modify(ContactData contact, int p)
+        {
+            InitContactModification(p);
+            FillContactForm(contact);
+            SubmitContactModification();
+            manager.Navigator.ReturnToHomePage();
+            return this;
+        }
+        
+        public ContactHelper Remove(int index)
+        {
+            SelectContact(index);
+            RemoveContact();
+            return this;
+        }
+
+        private ContactHelper RemoveContact()
+        {
+            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            driver.SwitchTo().Alert().Accept();
+            return this;
+        }
+
+        private ContactHelper SelectContact(int index)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            return this;
+        }
+
+        public ContactHelper InitContactModification(int p)
+        {
+            driver.FindElement(By.XPath($"//a[@href='edit.php?id={p}']")).Click();
+            return this;
+        }    
+        
+        public ContactHelper SubmitContactModification()
+        {
+            driver.FindElement(By.Name("update")).Click();
+            return this;
         }
 
         public void SubmitContactCreation()
@@ -99,5 +143,6 @@ namespace WebAddressBookTests
         {
             driver.FindElement(By.LinkText("add new")).Click();
         }
+        
     }
 }

@@ -20,5 +20,10 @@ namespace WebAddressBookTests
         {
             driver.Navigate().GoToUrl(baseURL);
         }
+
+        public void ReturnToHomePage()
+        {
+            driver.FindElement(By.LinkText("home page")).Click();
+        }
     }
 }

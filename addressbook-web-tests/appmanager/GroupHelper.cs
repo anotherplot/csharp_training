@@ -30,12 +30,13 @@ namespace WebAddressBookTests
             return this;
         }
 
-        public void Remove(int index)
+        public GroupHelper Remove(int index)
         {
             manager.Navigator.GoToGroupsPage();
             SelectGroup(index);
             RemoveGroup();
             ReturnToGroupsPage();
+            return this;
         }
 
         public GroupHelper ReturnToGroupsPage()
