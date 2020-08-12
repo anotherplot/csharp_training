@@ -8,7 +8,8 @@ namespace WebAddressBookTests
 {
     public class ApplicationManager
     {
-        protected IWebDriver driver;
+        public IWebDriver driver;
+
         protected string baseURL;
 
         protected LoginHelper loginHelper;
@@ -20,6 +21,7 @@ namespace WebAddressBookTests
         public NavigationHelper Navigator => navigationHelper;
         public GroupHelper Groups => groupHelper;
         public ContactHelper Contacts => contactHelper;
+        public IWebDriver Driver => driver;
 
         public ApplicationManager()
         {
@@ -27,10 +29,10 @@ namespace WebAddressBookTests
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
             baseURL = "http://localhost:8080/addressbook";
             
-            loginHelper = new LoginHelper(driver);
-            navigationHelper = new NavigationHelper(driver, baseURL);
-            groupHelper = new GroupHelper(driver);
-            contactHelper = new ContactHelper(driver);
+            loginHelper = new LoginHelper(this);
+            navigationHelper = new NavigationHelper(this, baseURL);
+            groupHelper = new GroupHelper(this);
+            contactHelper = new ContactHelper(this);
         }
 
         public void Stop()
