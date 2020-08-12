@@ -3,36 +3,37 @@ using System.Text;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Support.UI;
 
 namespace WebAddressBookTests
 {
-    public class TestBase
+    public class ApplicationManager
     {
         protected IWebDriver driver;
-        private StringBuilder verificationErrors;
         protected string baseURL;
-        private bool acceptNextAlert = true;
+
         protected LoginHelper loginHelper;
         protected NavigationHelper navigationHelper;
         protected GroupHelper groupHelper;
         protected ContactHelper contactHelper;
 
-        [SetUp]
-        public void SetupTest()
+        public LoginHelper Auth => loginHelper;
+        public NavigationHelper Navigator => navigationHelper;
+        public GroupHelper Groups => groupHelper;
+        public ContactHelper Contacts => contactHelper;
+
+        public ApplicationManager()
         {
             driver = new FirefoxDriver();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-            verificationErrors = new StringBuilder();
             baseURL = "http://localhost:8080/addressbook";
+            
             loginHelper = new LoginHelper(driver);
             navigationHelper = new NavigationHelper(driver, baseURL);
             groupHelper = new GroupHelper(driver);
             contactHelper = new ContactHelper(driver);
         }
 
-        [TearDown]
-        public void TeardownTest()
+        public void Stop()
         {
             try
             {
@@ -42,8 +43,6 @@ namespace WebAddressBookTests
             {
                 // Ignore errors if unable to close the browser
             }
-
-            Assert.AreEqual("", verificationErrors.ToString());
         }
     }
 }

@@ -6,9 +6,9 @@ namespace WebAddressBookTests
     {
         private string baseURL;
 
-        public NavigationHelper(IWebDriver driver, string baseUrl) : base(driver)
+        public NavigationHelper(IWebDriver driver, string baseURL) : base(driver)
         {
-            this.baseURL = baseUrl;
+            this.baseURL = baseURL;
         }
         
         public void GoToGroupsPage()
