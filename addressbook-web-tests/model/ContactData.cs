@@ -5,9 +5,9 @@ namespace WebAddressBookTests
     public class ContactData
     {
         private string firstName;
-        private string middleName = "";
+        private string middleName;
         private string lastName;
-        private string nickName;
+        private string nickName = null;
         private string title;
         private string company;
         private string address;

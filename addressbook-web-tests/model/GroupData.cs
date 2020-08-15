@@ -3,8 +3,8 @@ namespace WebAddressBookTests
     public class GroupData
     {
         private string name;
-        private string header = "";
-        private string footer = "";
+        private string header = null;
+        private string footer = null;
 
         public string Header
         {
@@ -27,13 +27,6 @@ namespace WebAddressBookTests
         public GroupData(string name)
         {
             this.name = name;
-        }
-        
-        public GroupData(string name, string header, string footer)
-        {
-            this.name = name;
-            this.header = header;
-            this.footer = footer;
         }
     }
 }

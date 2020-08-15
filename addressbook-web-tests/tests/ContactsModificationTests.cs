@@ -11,7 +11,6 @@ namespace WebAddressBookTests
         {
             ContactData contact = new ContactData("new", "data");
             contact.MiddleName = "new";
-            contact.NickName = "new";
             contact.LastName = "new";
             contact.Title = "new";
             contact.Company = "new";
@@ -30,7 +29,7 @@ namespace WebAddressBookTests
             contact.SecondAddress = "new";
             contact.SecondHome = "new";
             contact.Notes = "new";
-            app.Contacts.Modify(contact,1);
+            app.Contacts.Modify(contact,3);
             
         }
     }
