@@ -1,7 +1,7 @@
-using System;
 using OpenQA.Selenium;
+using WebAddressBookTests;
 
-namespace WebAddressBookTests
+namespace addressbook_web_tests.appmanager
 {
     public class GroupHelper : HelperBase
     {

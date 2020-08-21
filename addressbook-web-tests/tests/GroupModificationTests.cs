@@ -3,14 +3,14 @@ using NUnit.Framework;
 namespace WebAddressBookTests
 {
     [TestFixture]
-    public class GroupModificationTests : TestBase
+    public class GroupModificationTests : AuthTestBase
 
     {
         [Test]
         public void GroupModificationTest()
         {
             GroupData newData = new GroupData("fff");
-            app.Groups.Modify(newData,1);
+            app.Groups.Modify(newData, 1);
         }
     }
 }

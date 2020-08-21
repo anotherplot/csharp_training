@@ -1,8 +1,7 @@
-using System;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
+using WebAddressBookTests;
 
-namespace WebAddressBookTests
+namespace addressbook_web_tests.appmanager
 {
     public class ContactHelper : HelperBase
     {
