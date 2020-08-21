@@ -29,7 +29,7 @@ namespace WebAddressBookTests
             contact.SecondAddress = "new";
             contact.SecondHome = "new";
             contact.Notes = "new";
-            app.Contacts.Modify(contact,3);
+            app.Contacts.Modify(contact);
             
         }
     }

@@ -17,9 +17,14 @@ namespace addressbook_web_tests.appmanager
             return this;
         }
 
-        public ContactHelper Modify(ContactData contact, int p)
+        public ContactHelper Modify(ContactData contact)
         {
-            InitContactModification(p);
+            if (!IsElementPresent(By.XPath("//img[@title='Edit']")))
+            {
+                InitContactCreation();
+                Create(new ContactData("abd", "sdsd"));
+            }
+            InitContactModification();
             FillContactForm(contact);
             SubmitContactModification();
             manager.Navigator.ReturnToHomePage();
@@ -28,6 +33,11 @@ namespace addressbook_web_tests.appmanager
 
         public ContactHelper Remove(int index)
         {
+            if (!IsElementPresent(By.XPath("//img[@title='Edit']")))
+            {
+                InitContactCreation();
+                Create(new ContactData("abd", "sdsd"));
+            }
             SelectContact(index);
             RemoveContact();
             return this;
@@ -46,9 +56,9 @@ namespace addressbook_web_tests.appmanager
             return this;
         }
 
-        public ContactHelper InitContactModification(int p)
+        public ContactHelper InitContactModification()
         {
-            driver.FindElement(By.XPath($"//a[@href='edit.php?id={p}']")).Click();
+            driver.FindElement(By.XPath($"(//img[@title='Edit'])[1]")).Click();
             return this;
         }
 

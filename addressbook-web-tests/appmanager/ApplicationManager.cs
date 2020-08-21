@@ -17,6 +17,7 @@ namespace WebAddressBookTests
         protected ContactHelper contactHelper;
 
         public LoginHelper Auth => loginHelper;
+        public string BaseUrl => baseURL;
         public NavigationHelper Navigator => navigationHelper;
         public GroupHelper Groups => groupHelper;
         public ContactHelper Contacts => contactHelper;
@@ -28,7 +29,7 @@ namespace WebAddressBookTests
         {
             driver = new FirefoxDriver();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-            baseURL = "http://localhost:8080/addressbook";
+            baseURL = "http://localhost:8080";
             
             loginHelper = new LoginHelper(this);
             navigationHelper = new NavigationHelper(this, baseURL);
