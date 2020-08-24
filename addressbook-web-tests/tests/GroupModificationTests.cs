@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace WebAddressBookTests
@@ -19,7 +20,14 @@ namespace WebAddressBookTests
         public void GroupModificationTest()
         {
             GroupData newData = new GroupData("fff");
-            app.Groups.Modify(newData, 1);
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            
+            app.Groups.Modify(newData, 0);
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+            oldGroups[0].Name = newData.Name;
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups,newGroups);
         }
     }
 }

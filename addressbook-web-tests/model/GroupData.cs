@@ -2,7 +2,7 @@ using System;
 
 namespace WebAddressBookTests
 {
-    public class GroupData : IEquatable<GroupData>
+    public class GroupData : IEquatable<GroupData>, IComparable<GroupData>
 
     {
         private string name;
@@ -47,9 +47,21 @@ namespace WebAddressBookTests
             return Name == other.Name;
         }
 
+        public int CompareTo(GroupData other)
+        {
+            if (ReferenceEquals(other, null))
+                return 1;
+            return Name.CompareTo(other.Name);
+        }
+
         public override int GetHashCode()
         {
             return Name.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return "name = " + Name;
         }
     }
 }
