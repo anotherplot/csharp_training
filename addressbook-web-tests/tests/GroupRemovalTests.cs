@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace WebAddressBookTests
@@ -17,7 +18,12 @@ namespace WebAddressBookTests
         [Test]
         public void GroupRemovalTest()
         {
-            app.Groups.Remove(1);
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            app.Groups.Remove(0);
+            
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+            oldGroups.RemoveAt(0);
+            Assert.AreEqual(oldGroups,newGroups);
         }
     }
 }
