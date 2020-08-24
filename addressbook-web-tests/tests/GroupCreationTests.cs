@@ -31,9 +31,12 @@ namespace WebAddressBookTests
             group.Footer = "";
             List<GroupData> oldGroups = app.Groups.GetGroupList();
             app.Groups.Create(group);
+            oldGroups.Add(group);
             
             List<GroupData> newGroups = app.Groups.GetGroupList();
-            Assert.AreEqual(oldGroups.Count + 1, newGroups.Count);
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups,newGroups);
         }
     }
 }
