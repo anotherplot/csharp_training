@@ -21,11 +21,6 @@ namespace addressbook_web_tests.appmanager
 
         public GroupHelper Modify(GroupData newData, int index)
         {
-            manager.Navigator.GoToGroupsPage();
-            if (!IsElementPresent(By.Name("selected[]")))
-            {
-                Create(new GroupData("abc"));
-            }
             SelectGroup(index);
             InitGroupModification();
             FillGroupForm(newData);
@@ -36,11 +31,6 @@ namespace addressbook_web_tests.appmanager
 
         public GroupHelper Remove(int index)
         {
-            manager.Navigator.GoToGroupsPage();
-            if (!IsElementPresent(By.Name("selected[]")))
-            {
-                Create(new GroupData("abc"));
-            }
             SelectGroup(index);
             RemoveGroup();
             ReturnToGroupsPage();
@@ -95,6 +85,12 @@ namespace addressbook_web_tests.appmanager
         {
             driver.FindElement(By.Name("new")).Click();
             return this;
+        }
+
+        public bool IsAnyGroupExist()
+        {
+            manager.Navigator.GoToGroupsPage();
+            return IsElementPresent(By.Name("selected[]"));
         }
     }
 }

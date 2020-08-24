@@ -1,7 +1,6 @@
 using OpenQA.Selenium;
-using WebAddressBookTests;
 
-namespace addressbook_web_tests.appmanager
+namespace WebAddressBookTests
 {
     public class ContactHelper : HelperBase
     {
@@ -19,11 +18,6 @@ namespace addressbook_web_tests.appmanager
 
         public ContactHelper Modify(ContactData contact)
         {
-            if (!IsElementPresent(By.XPath("//img[@title='Edit']")))
-            {
-                InitContactCreation();
-                Create(new ContactData("abd", "sdsd"));
-            }
             InitContactModification();
             FillContactForm(contact);
             SubmitContactModification();
@@ -33,11 +27,6 @@ namespace addressbook_web_tests.appmanager
 
         public ContactHelper Remove(int index)
         {
-            if (!IsElementPresent(By.XPath("//img[@title='Edit']")))
-            {
-                InitContactCreation();
-                Create(new ContactData("abd", "sdsd"));
-            }
             SelectContact(index);
             RemoveContact();
             return this;
@@ -90,14 +79,14 @@ namespace addressbook_web_tests.appmanager
             Type(By.Name("email3"), contactData.Email3);
             Type(By.Name("fax"), contactData.Fax);
             Type(By.Name("homepage"), contactData.Homepage);
-            
-            SelectOption( By.Name("bday"), contactData.Birthday.Day.ToString());
-            SelectOption( By.Name("bmonth"), contactData.Birthday.ToString("MMMM"));
+
+            SelectOption(By.Name("bday"), contactData.Birthday.Day.ToString());
+            SelectOption(By.Name("bmonth"), contactData.Birthday.ToString("MMMM"));
             Type(By.Name("byear"), contactData.Birthday.Year.ToString());
-            SelectOption( By.Name("aday"), contactData.Anniversary.Day.ToString());
+            SelectOption(By.Name("aday"), contactData.Anniversary.Day.ToString());
             SelectOption(By.Name("amonth"), contactData.Anniversary.ToString("MMMM"));
             Type(By.Name("ayear"), contactData.Anniversary.Year.ToString());
-            
+
             Type(By.Name("address2"), contactData.SecondAddress);
             Type(By.Name("phone2"), contactData.SecondHome);
             Type(By.Name("notes"), contactData.Notes);
@@ -106,6 +95,11 @@ namespace addressbook_web_tests.appmanager
         public void InitContactCreation()
         {
             driver.FindElement(By.LinkText("add new")).Click();
+        }
+
+        public bool IsAnyContactExist()
+        {
+            return IsElementPresent(By.XPath("//img[@title='Edit']"));
         }
     }
 }
