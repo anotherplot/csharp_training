@@ -2,12 +2,12 @@ using System;
 
 namespace WebAddressBookTests
 {
-    public class ContactData
+    public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string firstName;
         private string middleName;
         private string lastName;
-        private string nickName = null;
+        private string nickName;
         private string title;
         private string company;
         private string address;
@@ -181,6 +181,39 @@ namespace WebAddressBookTests
             this.secondAddress = secondAddress;
             this.secondHome = secondHome;
             this.notes = notes;
+        }
+
+        public bool Equals(ContactData other)
+        {
+            
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            return FirstName == other.FirstName && LastName == other.LastName;
+        }
+
+        public int CompareTo(ContactData other)
+        {
+            if (ReferenceEquals(other, null))
+                return 1;
+            return LastName.CompareTo(other.LastName);
+        }
+        
+        public override int GetHashCode()
+        {
+            return LastName.GetHashCode()  + FirstName.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return "lastname = " + LastName;
         }
     }
 }

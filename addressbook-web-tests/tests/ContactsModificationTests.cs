@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace WebAddressBookTests
@@ -39,7 +40,17 @@ namespace WebAddressBookTests
             contact.SecondAddress = "new";
             contact.SecondHome = "new";
             contact.Notes = "new";
+            
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
+
             app.Contacts.Modify(contact);
+
+            oldContacts[0].LastName = contact.LastName;
+            oldContacts[0].FirstName = contact.FirstName;
+            List<ContactData> newContacts = app.Contacts.GetContactList();
+            oldContacts.Sort();
+            newContacts.Sort();
+            Assert.AreEqual(oldContacts,newContacts);
             
         }
     }

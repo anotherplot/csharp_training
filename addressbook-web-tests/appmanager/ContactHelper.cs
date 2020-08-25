@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using OpenQA.Selenium;
 
 namespace WebAddressBookTests
@@ -41,7 +43,7 @@ namespace WebAddressBookTests
 
         private ContactHelper SelectContact(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index + 1) + "]")).Click();
             return this;
         }
 
@@ -100,6 +102,25 @@ namespace WebAddressBookTests
         public bool IsAnyContactExist()
         {
             return IsElementPresent(By.XPath("//img[@title='Edit']"));
+        }
+
+        public List<ContactData> GetContactList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            manager.Navigator.GoToHomePage();
+            ICollection<IWebElement> contactLastNames = driver.FindElements(By.XPath("//*[@id='maintable']//td[2]"));
+            ICollection<IWebElement> contactFirstNames = driver.FindElements(By.XPath("//*[@id='maintable']//td[3]"));
+
+            var fullContactNames = contactLastNames
+                .Zip(contactFirstNames, (f, l)
+                    => new {LastName = l.Text, FirstName = f.Text});
+
+            foreach (var contact in fullContactNames)
+            {
+                contacts.Add(new ContactData(contact.LastName, contact.FirstName));
+            }
+
+            return contacts;
         }
     }
 }
