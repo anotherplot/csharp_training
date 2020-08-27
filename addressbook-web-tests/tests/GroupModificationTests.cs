@@ -21,6 +21,7 @@ namespace WebAddressBookTests
         {
             GroupData newData = new GroupData("fff");
             List<GroupData> oldGroups = app.Groups.GetGroupList();
+            GroupData oldData = oldGroups[0];
             
             app.Groups.Modify(newData, 0);
             Assert.AreEqual(oldGroups.Count, app.Groups.GetGroupCount());
@@ -30,6 +31,13 @@ namespace WebAddressBookTests
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups,newGroups);
+            foreach (var group in newGroups)
+            {
+                if (group.Id == oldData.Id)
+                {
+                    Assert.AreEqual(newData.Name,group.Name);
+                }
+            }
         }
     }
 }

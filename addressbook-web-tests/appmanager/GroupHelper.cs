@@ -108,7 +108,10 @@ namespace addressbook_web_tests.appmanager
                 ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
                 foreach (var webElement in elements)
                 {
-                    groupCache.Add(new GroupData(webElement.Text));
+                    groupCache.Add(new GroupData(webElement.Text)
+                    {
+                        Id = webElement.FindElement(By.TagName("input")).GetAttribute("value")
+                    });
                 }
             }
 
