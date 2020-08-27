@@ -10,34 +10,35 @@ namespace WebAddressBookTests
         [Test]
         public void ContactCreationTest()
         {
-            ContactData contact = new ContactData("FirstName", "LastName");
-            contact.MiddleName = "TestMiddleName";
-            contact.NickName = "TestNickName";
-            contact.LastName = "TestLastName";
-            contact.Title = "TestTitle";
-            contact.Company = "TestCompany";
-            contact.Address = "TestAddress";
-            contact.Telephone = "70099988800";
-            contact.Home = "77799988800";
-            contact.Mobile = "77799988877";
-            contact.Work = "888988899";
-            contact.Fax = "909888999";
-            contact.Email = "email@mail.com";
-            contact.Email2 = "email2@mail.com";
-            contact.Email3 = "email3@mail.com";
-            contact.Homepage = "homepage.com";
-            contact.Birthday = new DateTime(1990, 8, 9);
-            contact.Anniversary = new DateTime(2000, 1, 30);
-            contact.SecondAddress = "TestSecondAddress";
-            contact.SecondHome = "TestSecondHome";
-            contact.Notes = "TestNotes";
+            ContactData newData = new ContactData("FirstName", "LastName");
+            newData.MiddleName = "TestMiddleName";
+            newData.NickName = "TestNickName";
+            newData.LastName = "TestLastName";
+            newData.Title = "TestTitle";
+            newData.Company = "TestCompany";
+            newData.Address = "TestAddress";
+            newData.Home = "77799988800";
+            newData.Mobile = "77799988877";
+            newData.Work = "888988899";
+            newData.Fax = "909888999";
+            newData.Email = "email@mail.com";
+            newData.Email2 = "email2@mail.com";
+            newData.Email3 = "email3@mail.com";
+            newData.Homepage = "homepage.com";
+            newData.Birthday = new DateTime(1990, 8, 9);
+            newData.Anniversary = new DateTime(2000, 1, 30);
+            newData.SecondAddress = "TestSecondAddress";
+            newData.SecondHome = "TestSecondHome";
+            newData.Notes = "TestNotes";
 
             List<ContactData> oldContacts = app.Contacts.GetContactList();
+            ContactData oldData = oldContacts[0];
 
             app.Contacts.InitContactCreation();
-            app.Contacts.Create(contact);
+            app.Contacts.Create(newData);
+            Assert.AreEqual(oldContacts.Count + 1, app.Contacts.GetContactCount());
 
-            oldContacts.Add(contact);
+            oldContacts.Add(newData);
             List<ContactData> newContacts = app.Contacts.GetContactList();
             oldContacts.Sort();
             newContacts.Sort();

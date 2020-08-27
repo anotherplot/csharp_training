@@ -9,15 +9,15 @@ namespace WebAddressBookTests
         [Test]
         public void GroupCreationTest()
         {
-            GroupData group = new GroupData("groupName");
-            group.Header = "groupHeader";
-            group.Footer = "groupFooter";
+            GroupData newData = new GroupData("groupName");
+            newData.Header = "groupHeader";
+            newData.Footer = "groupFooter";
             
             List<GroupData> oldGroups = app.Groups.GetGroupList();
-            oldGroups.Add(group);
-            app.Groups.Create(group);
-            
+            var oldData = oldGroups[0];
+            app.Groups.Create(newData);
             Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
+            oldGroups.Add(newData);
 
             List<GroupData> newGroups = app.Groups.GetGroupList();
             oldGroups.Sort();
@@ -28,14 +28,17 @@ namespace WebAddressBookTests
         [Test]
         public void EmptyGroupCreationTest()
         {
-            GroupData group = new GroupData("");
-            group.Header = "";
-            group.Footer = "";
+            GroupData newData = new GroupData("");
+            newData.Header = "";
+            newData.Footer = "";
+            
             List<GroupData> oldGroups = app.Groups.GetGroupList();
-            app.Groups.Create(group);
+            var oldData = oldGroups[0];
+            
+            app.Groups.Create(newData);
             Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
             
-            oldGroups.Add(group);
+            oldGroups.Add(newData);
             
             List<GroupData> newGroups = app.Groups.GetGroupList();
             oldGroups.Sort();

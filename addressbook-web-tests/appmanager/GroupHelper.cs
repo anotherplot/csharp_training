@@ -6,7 +6,7 @@ namespace addressbook_web_tests.appmanager
 {
     public class GroupHelper : HelperBase
     {
-        private List<GroupData> groupCache;
+        private List<GroupData> _groupCache;
 
         public GroupHelper(ApplicationManager manager) : base(manager)
         {
@@ -55,7 +55,7 @@ namespace addressbook_web_tests.appmanager
         public GroupHelper RemoveGroup()
         {
             driver.FindElement(By.Name("delete")).Click();
-            groupCache = null;
+            _groupCache = null;
             return this;
         }
 
@@ -68,14 +68,14 @@ namespace addressbook_web_tests.appmanager
         public GroupHelper SubmitGroupModification()
         {
             driver.FindElement(By.Name("update")).Click();
-            groupCache = null;
+            _groupCache = null;
             return this;
         }
 
         public GroupHelper SubmitGroupCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
-            groupCache = null;
+            _groupCache = null;
             return this;
         }
 
@@ -101,21 +101,21 @@ namespace addressbook_web_tests.appmanager
 
         public List<GroupData> GetGroupList()
         {
-            if (groupCache == null)
+            if (_groupCache == null)
             {
-                groupCache = new List<GroupData>();
+                _groupCache = new List<GroupData>();
                 manager.Navigator.GoToGroupsPage();
                 ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
                 foreach (var webElement in elements)
                 {
-                    groupCache.Add(new GroupData(webElement.Text)
+                    _groupCache.Add(new GroupData(webElement.Text)
                     {
                         Id = webElement.FindElement(By.TagName("input")).GetAttribute("value")
                     });
                 }
             }
 
-            return new List<GroupData>(groupCache);
+            return new List<GroupData>(_groupCache);
         }
 
         public int GetGroupCount()
