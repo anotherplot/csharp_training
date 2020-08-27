@@ -203,17 +203,20 @@ namespace WebAddressBookTests
         {
             if (ReferenceEquals(other, null))
                 return 1;
-            return LastName.CompareTo(other.LastName);
+            int compareLastName = LastName.CompareTo(other.LastName);
+            return compareLastName == 0
+                ? FirstName.CompareTo(other.FirstName)
+                : compareLastName;
         }
-        
+
         public override int GetHashCode()
         {
-            return LastName.GetHashCode()  + FirstName.GetHashCode();
+            return LastName.GetHashCode() + FirstName.GetHashCode();
         }
 
         public override string ToString()
         {
-            return "lastname = " + LastName;
+            return "lastname = " + LastName + ", firstname = " + FirstName;
         }
     }
 }
