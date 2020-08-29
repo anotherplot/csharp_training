@@ -1,11 +1,10 @@
 using System;
-using System.Collections.ObjectModel;
-using OpenQA.Selenium;
 
 namespace WebAddressBookTests
 {
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
+        private string _allPhones;
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
@@ -15,6 +14,10 @@ namespace WebAddressBookTests
         public string Address { get; set; }
         public string Home { get; set; }
         public string Work { get; set; }
+        public string AllPhones {
+            get => _allPhones ?? (CleanUp(Home) + CleanUp(Mobile) + CleanUp(Work)).Trim();
+            set => _allPhones = value;
+        }
         public string Mobile { get; set; }
         public string Fax { get; set; }
         public string Email { get; set; }
@@ -67,6 +70,19 @@ namespace WebAddressBookTests
         public override string ToString()
         {
             return "lastname = " + LastName + ", firstname = " + FirstName;
+        }
+        
+        private string CleanUp(string phone)
+        {
+            if (string.IsNullOrEmpty(phone))
+            {
+                return "";
+            }
+
+            return phone.Replace(" ", "")
+                .Replace("-", "")
+                .Replace("(", "")
+                .Replace(")", "") + "\n";
         }
     }
 }

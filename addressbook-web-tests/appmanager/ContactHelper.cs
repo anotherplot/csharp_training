@@ -19,9 +19,9 @@ namespace WebAddressBookTests
             return this;
         }
 
-        public ContactHelper Modify(ContactData contact)
+        public ContactHelper Modify(ContactData contact, int index)
         {
-            InitContactModification();
+            InitContactModification(index);
             FillContactForm(contact);
             SubmitContactModification();
             manager.Navigator.ReturnToHomePage();
@@ -49,10 +49,12 @@ namespace WebAddressBookTests
             return this;
         }
 
-        public ContactHelper InitContactModification()
+        public void InitContactModification(int index)
         {
-            driver.FindElement(By.XPath($"(//img[@title='Edit'])[1]")).Click();
-            return this;
+            driver.FindElements(By.Name("entry"))[index]
+                .FindElements(By.TagName("td"))[7]
+                .FindElement(By.TagName("a"))
+                .Click();
         }
 
         public ContactHelper SubmitContactModification()
@@ -136,6 +138,45 @@ namespace WebAddressBookTests
         public int GetContactCount()
         {
             return (driver.FindElements(By.CssSelector("tr")).Count - 1);
+        }
+
+        public ContactData GetContactInformationFromTable(int index)
+        {
+            manager.Navigator.GoToHomePage();
+            IList<IWebElement> cells = driver.FindElements(By.Name("entry"))[index]
+                .FindElements(By.TagName("td"));
+            string lastName = cells[1].Text;
+            string firstName = cells[2].Text;
+            string address = cells[3].Text;
+            string allPhones = cells[5].Text;
+            
+            return new ContactData(firstName, lastName)
+            {
+                Address = address,
+                AllPhones = allPhones
+            };
+
+        }
+        public ContactData GetContactInformationFromEditForm(int index)
+        {
+            manager.Navigator.GoToHomePage();
+            InitContactModification(0);
+            
+            string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
+            string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
+            string address = driver.FindElement(By.Name("address")).GetAttribute("value");
+            
+            string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
+            string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
+            string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
+            
+            return new ContactData(firstName, lastName)
+            {
+                Address = address,
+                Home = homePhone,
+                Mobile = mobilePhone, 
+                Work = workPhone
+            };
         }
     }
 }
