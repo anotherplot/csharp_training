@@ -1,4 +1,5 @@
 using System;
+using System.Text.RegularExpressions;
 
 namespace WebAddressBookTests
 {
@@ -14,10 +15,13 @@ namespace WebAddressBookTests
         public string Address { get; set; }
         public string Home { get; set; }
         public string Work { get; set; }
-        public string AllPhones {
+
+        public string AllPhones
+        {
             get => _allPhones ?? (CleanUp(Home) + CleanUp(Mobile) + CleanUp(Work)).Trim();
             set => _allPhones = value;
         }
+
         public string Mobile { get; set; }
         public string Fax { get; set; }
         public string Email { get; set; }
@@ -30,7 +34,7 @@ namespace WebAddressBookTests
         public string SecondHome { get; set; }
         public string Notes { get; set; }
         public string Id { get; set; }
-        
+
         public ContactData(string firstName, string lastName)
         {
             FirstName = firstName;
@@ -71,7 +75,7 @@ namespace WebAddressBookTests
         {
             return "lastname = " + LastName + ", firstname = " + FirstName;
         }
-        
+
         private string CleanUp(string phone)
         {
             if (string.IsNullOrEmpty(phone))
@@ -79,10 +83,7 @@ namespace WebAddressBookTests
                 return "";
             }
 
-            return phone.Replace(" ", "")
-                .Replace("-", "")
-                .Replace("(", "")
-                .Replace(")", "") + "\n";
+            return Regex.Replace(phone, "[ -()]", "") + "\r\n";
         }
     }
 }
