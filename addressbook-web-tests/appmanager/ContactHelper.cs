@@ -194,5 +194,22 @@ namespace WebAddressBookTests
             Match m = new Regex(@"\d+").Match(text);
             return Int32.Parse(m.Value);
         }
+
+        public string GetContactInformationFromView(int i)
+        {
+            manager.Navigator.GoToHomePage();
+            OpenContactDetails(0);
+            string contactInformation = driver.FindElement(By.Id("content")).Text;
+            return contactInformation;
+
+        }
+
+        private void OpenContactDetails(int i)
+        {
+            driver.FindElements(By.Name("entry"))[i]
+                .FindElements(By.TagName("td"))[6]
+                .FindElement(By.TagName("a"))
+                .Click();
+        }
     }
 }
