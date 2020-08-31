@@ -18,7 +18,7 @@ namespace WebAddressBookTests
 
         public string AllPhones
         {
-            get => _allPhones ?? (CleanUp(Home) + CleanUp(Mobile) + CleanUp(Work)).Trim();
+            get => _allPhones ?? (CleanUp(Home) + CleanUp(Mobile) + CleanUp(Work)) + CleanUp(SecondHomePhone).Trim();
             set => _allPhones = value;
         }
 
@@ -31,7 +31,7 @@ namespace WebAddressBookTests
         public DateTime Birthday { get; set; }
         public DateTime Anniversary { get; set; }
         public string SecondAddress { get; set; }
-        public string SecondHome { get; set; }
+        public string SecondHomePhone { get; set; }
         public string Notes { get; set; }
         public string Id { get; set; }
 
@@ -83,7 +83,7 @@ namespace WebAddressBookTests
                 return "";
             }
 
-            return Regex.Replace(phone, "[ -()]", "") + "\r\n";
+            return Regex.Replace(phone, "[ -()]", "") + "\n";
         }
     }
 }

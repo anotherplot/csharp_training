@@ -37,7 +37,7 @@ namespace WebAddressBookTests
             newData.Birthday = new DateTime(1992, 8, 9);
             newData.Anniversary = new DateTime(2021, 1, 30);
             newData.SecondAddress = "new";
-            newData.SecondHome = "new";
+            newData.SecondHomePhone = "new";
             newData.Notes = "new";
             
             List<ContactData> oldContacts = app.Contacts.GetContactList();

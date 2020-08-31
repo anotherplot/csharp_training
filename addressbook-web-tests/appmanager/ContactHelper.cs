@@ -99,7 +99,7 @@ namespace WebAddressBookTests
             Type(By.Name("ayear"), contactData.Anniversary.Year.ToString());
 
             Type(By.Name("address2"), contactData.SecondAddress);
-            Type(By.Name("phone2"), contactData.SecondHome);
+            Type(By.Name("phone2"), contactData.SecondHomePhone);
             Type(By.Name("notes"), contactData.Notes);
         }
 
@@ -174,13 +174,16 @@ namespace WebAddressBookTests
             string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
             string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
             string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
+            
+            string secondHomePhone =  driver.FindElement(By.Name("phone2")).GetAttribute("value");
 
             return new ContactData(firstName, lastName)
             {
                 Address = address,
                 Home = homePhone,
                 Mobile = mobilePhone,
-                Work = workPhone
+                Work = workPhone,
+                SecondHomePhone = secondHomePhone
             };
         }
 
