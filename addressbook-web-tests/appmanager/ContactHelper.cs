@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using OpenQA.Selenium;
@@ -168,22 +169,55 @@ namespace WebAddressBookTests
             InitContactModification(0);
 
             string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
+            string middleName = driver.FindElement(By.Name("middlename")).GetAttribute("value");
             string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
+            string nickName = driver.FindElement(By.Name("nickname")).GetAttribute("value");
+            string company = driver.FindElement(By.Name("company")).GetAttribute("value");
+            string title = driver.FindElement(By.Name("title")).GetAttribute("value");
             string address = driver.FindElement(By.Name("address")).GetAttribute("value");
 
             string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
             string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
             string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
+            string fax = driver.FindElement(By.Name("fax")).GetAttribute("value");
             
+            string email = driver.FindElement(By.Name("email")).GetAttribute("value");
+            string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
+            string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
+            
+            string homePage = driver.FindElement(By.Name("homepage")).GetAttribute("value");
+            string birthDay = driver.FindElement(By.XPath("//select[@name='bday']/option[@selected='selected']")).Text;
+            string birthMonth = driver.FindElement(By.XPath("//select[@name='bmonth']/option[@selected='selected']")).Text;
+            string birthYear = driver.FindElement(By.Name("byear")).GetAttribute("value");
+            
+            string anniversaryDay = driver.FindElement(By.XPath("//select[@name='aday']/option[@selected='selected']")).Text;
+            string anniversaryMonth = driver.FindElement(By.XPath("//select[@name='amonth']/option[@selected='selected']")).Text;
+            string anniversaryYear = driver.FindElement(By.Name("ayear")).GetAttribute("value");
+            
+            string secondAddress = driver.FindElement(By.Name("address2")).GetAttribute("value");
             string secondHomePhone =  driver.FindElement(By.Name("phone2")).GetAttribute("value");
+            string notes =  driver.FindElement(By.Name("notes")).GetAttribute("value");
 
             return new ContactData(firstName, lastName)
             {
+                MiddleName = middleName,
+                NickName = nickName,
+                Company = company,
+                Title = title,
                 Address = address,
                 Home = homePhone,
                 Mobile = mobilePhone,
                 Work = workPhone,
-                SecondHomePhone = secondHomePhone
+                Fax = fax,
+                Email = email,
+                Email2 = email2,
+                Email3 = email3,
+                Homepage = homePage,
+                Birthday = new DateTime(Int32.Parse(birthYear),DateTime.ParseExact(birthMonth, "MMMM", CultureInfo.CurrentCulture ).Month,Int32.Parse(birthDay)),
+                Anniversary = new DateTime(Int32.Parse(anniversaryYear),DateTime.ParseExact(anniversaryMonth, "MMMM", CultureInfo.CurrentCulture ).Month,Int32.Parse(anniversaryDay)),
+                SecondAddress = secondAddress,
+                SecondHomePhone = secondHomePhone,
+                Notes = notes
             };
         }
 
@@ -195,12 +229,12 @@ namespace WebAddressBookTests
             return Int32.Parse(m.Value);
         }
 
-        public string GetContactInformationFromView(int i)
+        public ContactData GetContactInformationFromView(int i)
         {
             manager.Navigator.GoToHomePage();
             OpenContactDetails(0);
             string contactInformation = driver.FindElement(By.Id("content")).Text;
-            return contactInformation;
+            return new ContactData(){ContactDataInViewForm = contactInformation};
 
         }
 

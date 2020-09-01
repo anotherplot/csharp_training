@@ -6,6 +6,7 @@ namespace WebAddressBookTests
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string _allPhones;
+        private string _contactDataInViewForm;
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
@@ -34,11 +35,39 @@ namespace WebAddressBookTests
         public string SecondHomePhone { get; set; }
         public string Notes { get; set; }
         public string Id { get; set; }
+        
+        public string ContactDataInViewForm
+        {
+            get
+            {
+                if (_contactDataInViewForm == null)
+                {
+                    var name = $"{FirstName} {MiddleName} {LastName}\n";
+                    var phones = $"H: {CleanUp(Home)}M: {CleanUp(Mobile)}W: {CleanUp(Work)}F: {CleanUp(Fax)}\n";
+                    var emails = $"{Email}\n{Email2}\n{Email3}\n";
+                    var homePage = $"Homepage:\n{Homepage}\n\n";
+                    var birthDate = $"Birthday {Birthday.Day.ToString()}. {Birthday:MMMM} {Birthday.Year.ToString()} ({CountYears(Birthday)})\n";
+                    var anniversaryDate = $"Anniversary {Anniversary.Day.ToString()}. {Anniversary:MMMM} {Anniversary.Year.ToString()} ({CountYears(Anniversary)})\n\n";
+                    var secondPhone = $"P: {SecondHomePhone}\n\n";
+                    var result = name + NickName + "\n" + Title + "\n" + Company + "\n" + Address + "\n\n" + phones + emails + homePage +
+                                 birthDate + anniversaryDate + SecondAddress + "\n\n" + secondPhone + Notes;
+                    return result;
+                }
+
+                return _contactDataInViewForm;
+            }
+      
+                set => _contactDataInViewForm = value; 
+            
+        }
 
         public ContactData(string firstName, string lastName)
         {
             FirstName = firstName;
             LastName = lastName;
+        }
+        public ContactData()
+        {
         }
 
         public bool Equals(ContactData other)
@@ -84,6 +113,14 @@ namespace WebAddressBookTests
             }
 
             return Regex.Replace(phone, "[ -()]", "") + "\n";
+        }
+
+        private int CountYears(DateTime birthday)
+        {
+            var today = DateTime.Today;
+            var age = today.Year - birthday.Year;
+            if (birthday.Date > today.AddYears(-age)) age--;
+            return age;
         }
     }
 }
