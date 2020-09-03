@@ -26,5 +26,23 @@ namespace WebAddressBookTests
 
             return builder.ToString();
         }
+
+        public static string GenerateRandomPhoneNumber(int length)
+        {
+            StringBuilder builder = new StringBuilder();
+
+            for (int i = 0; i < length; i++)
+            {
+                builder.Append(rnd.Next(10));
+            }
+
+            return builder.ToString();
+        }
+        
+        
+        public static DateTime GenerateRandomDateInPast(int yearsRange)
+        {
+            return DateTime.Today.AddDays(-rnd.Next(yearsRange * 365));
+        }
     }
 }

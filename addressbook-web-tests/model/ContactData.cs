@@ -46,19 +46,21 @@ namespace WebAddressBookTests
                     var phones = $"H: {CleanUp(Home)}M: {CleanUp(Mobile)}W: {CleanUp(Work)}F: {CleanUp(Fax)}\n";
                     var emails = $"{Email}\n{Email2}\n{Email3}\n";
                     var homePage = $"Homepage:\n{Homepage}\n\n";
-                    var birthDate = $"Birthday {Birthday.Day.ToString()}. {Birthday:MMMM} {Birthday.Year.ToString()} ({CountYears(Birthday)})\n";
-                    var anniversaryDate = $"Anniversary {Anniversary.Day.ToString()}. {Anniversary:MMMM} {Anniversary.Year.ToString()} ({CountYears(Anniversary)})\n\n";
+                    var birthDate =
+                        $"Birthday {Birthday.Day.ToString()}. {Birthday:MMMM} {Birthday.Year.ToString()} ({CountYears(Birthday)})\n";
+                    var anniversaryDate =
+                        $"Anniversary {Anniversary.Day.ToString()}. {Anniversary:MMMM} {Anniversary.Year.ToString()} ({CountYears(Anniversary)})\n\n";
                     var secondPhone = $"P: {SecondHomePhone}\n\n";
-                    var result = name + NickName + "\n" + Title + "\n" + Company + "\n" + Address + "\n\n" + phones + emails + homePage +
+                    var result = name + NickName + "\n" + Title + "\n" + Company + "\n" + Address + "\n\n" + phones +
+                                 emails + homePage +
                                  birthDate + anniversaryDate + SecondAddress + "\n\n" + secondPhone + Notes;
                     return result;
                 }
 
                 return _contactDataInViewForm;
             }
-      
-                set => _contactDataInViewForm = value; 
-            
+
+            set => _contactDataInViewForm = value;
         }
 
         public ContactData(string firstName, string lastName)
@@ -66,6 +68,7 @@ namespace WebAddressBookTests
             FirstName = firstName;
             LastName = lastName;
         }
+
         public ContactData()
         {
         }
@@ -102,7 +105,8 @@ namespace WebAddressBookTests
 
         public override string ToString()
         {
-            return "lastname = " + LastName + ", firstname = " + FirstName;
+            return String.Format("lastname = {0}, firstname = {1}, middleName = {2}, address = {3}, email = {4}, workPhone = {5}, birthday = {6}",
+                LastName, FirstName, MiddleName, Address, Email, Work, Birthday);
         }
 
         private string CleanUp(string phone)
