@@ -7,6 +7,7 @@ namespace WebAddressBookTests
     {
         private string _allPhones;
         private string _contactDataInViewForm;
+        private string _allEmails;
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
@@ -19,7 +20,7 @@ namespace WebAddressBookTests
 
         public string AllPhones
         {
-            get => _allPhones ?? (CleanUp(Home) + CleanUp(Mobile) + CleanUp(Work)) + CleanUp(SecondHomePhone).Trim();
+            get => _allPhones ?? (CleanUp(Home) + CleanUp(Mobile) + CleanUp(Work) + CleanUp(SecondHomePhone)).Trim();
             set => _allPhones = value;
         }
 
@@ -62,6 +63,11 @@ namespace WebAddressBookTests
 
             set => _contactDataInViewForm = value;
         }
+
+        public string AllEmails {  
+            
+            get => _allEmails ?? (Email + "\n" + Email2 + "\n" + Email3);
+            set => _allEmails = value; }
 
         public ContactData(string firstName, string lastName)
         {
