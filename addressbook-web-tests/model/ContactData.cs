@@ -66,7 +66,7 @@ namespace WebAddressBookTests
 
         public string AllEmails {  
             
-            get => _allEmails ?? (Email + "\n" + Email2 + "\n" + Email3);
+            get => _allEmails ?? (Email + "\n" + Email2 + "\n" + Email3).Trim();
             set => _allEmails = value; }
 
         public ContactData(string firstName, string lastName)
