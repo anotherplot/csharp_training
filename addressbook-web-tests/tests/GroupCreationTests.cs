@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.IO;
+using System.Xml.Serialization;
 using NUnit.Framework;
 
 namespace WebAddressBookTests
@@ -18,18 +20,41 @@ namespace WebAddressBookTests
                     }
                 );
             }
+
             return groups;
         }
 
-        [Test, TestCaseSource("RandomGroupDataProvider")]
+        public static IEnumerable<GroupData> GroupDataFromCsvFile()
+        {
+            List<GroupData> groups = new List<GroupData>();
+            string[] lines = File.ReadAllLines(@"groups.csv");
+            foreach (string line in lines)
+            {
+                string[] parts = line.Split(",");
+                groups.Add(new GroupData(parts[0])
+                {
+                    Header = parts[1],
+                    Footer = parts[2]
+                });
+            }
+
+            return groups;
+        }
+
+        public static IEnumerable<GroupData> GroupDataFromXmlFile()
+        {
+            return (List<GroupData>) new XmlSerializer(typeof(List<GroupData>)).Deserialize(
+                new StreamReader(@"groups.xml"));
+        }
+
+
+        [Test, TestCaseSource("GroupDataFromXmlFile")]
         public void GroupCreationTest(GroupData newData)
         {
             List<GroupData> oldGroups = app.Groups.GetGroupList();
-            var oldData = oldGroups[0];
             app.Groups.Create(newData);
             Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
             oldGroups.Add(newData);
-
             List<GroupData> newGroups = app.Groups.GetGroupList();
             oldGroups.Sort();
             newGroups.Sort();
