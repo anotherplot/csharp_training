@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
-using NUnit.Framework;
+using Newtonsoft.Json;
 using WebAddressBookTests;
 
 namespace addressbook_test_data_generators
 {
-    class Program
+    static class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             var count = Convert.ToInt32(args[0]);
             StreamWriter writer = new StreamWriter(args[1]);
@@ -33,6 +33,10 @@ namespace addressbook_test_data_generators
             else if (format == "xml")
             {
                 WriteGroupsToXmlFile(groups, writer);
+            }       
+            else if (format == "json")
+            {
+                WriteGroupsToJsonFile(groups, writer);
             }
             else
             {
@@ -42,7 +46,7 @@ namespace addressbook_test_data_generators
             writer.Close();
         }
 
-        static void WriteGroupsToCsvFile(List<GroupData> groups, StreamWriter writer)
+        public static void WriteGroupsToCsvFile(List<GroupData> groups, StreamWriter writer)
         {
             foreach (var group in groups)
             {
@@ -53,9 +57,13 @@ namespace addressbook_test_data_generators
             }
         }
 
-        static void WriteGroupsToXmlFile(List<GroupData> groups, StreamWriter writer)
+        private static void WriteGroupsToXmlFile(List<GroupData> groups, StreamWriter writer)
         {
             new XmlSerializer(typeof(List<GroupData>)).Serialize(writer,groups);
+        }
+        static void WriteGroupsToJsonFile(List<GroupData> groups, StreamWriter writer)
+        {
+            writer.Write(JsonConvert.SerializeObject(groups, Formatting.Indented));
         }
     }
 }
