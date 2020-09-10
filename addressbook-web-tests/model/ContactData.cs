@@ -66,7 +66,7 @@ namespace WebAddressBookTests
 
         public string AllEmails {  
             
-            get => _allEmails ?? (Email + "\n" + Email2 + "\n" + Email3).Trim();
+            get => _allEmails ?? (AddNewLine(Email) + AddNewLine(Email2) + AddNewLine(Email3)).Trim();
             set => _allEmails = value; }
 
         public ContactData(string firstName, string lastName)
@@ -123,6 +123,16 @@ namespace WebAddressBookTests
             }
 
             return Regex.Replace(phone, "[ -()]", "") + "\n";
+        }
+        
+        private string AddNewLine(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+            {
+                return "";
+            }
+
+            return email + "\n";
         }
 
         private int CountYears(DateTime birthday)
