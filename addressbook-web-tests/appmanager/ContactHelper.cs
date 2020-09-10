@@ -232,12 +232,12 @@ namespace WebAddressBookTests
             return Int32.Parse(m.Value);
         }
 
-        public ContactData GetContactInformationFromView(int i)
+        public string GetContactInformationFromView(int i)
         {
             manager.Navigator.GoToHomePage();
             OpenContactDetails(0);
             string contactInformation = driver.FindElement(By.Id("content")).Text;
-            return new ContactData(){ContactDataInViewForm = contactInformation};
+            return contactInformation;
 
         }
 
