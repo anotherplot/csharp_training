@@ -43,14 +43,14 @@ namespace WebAddressBookTests
         [Test, TestCaseSource("ContactDataFromJsonFile")]
         public void ContactCreationTest(ContactData newData)
         {
-            List<ContactData> oldContacts = app.Contacts.GetContactList();
+            List<ContactData> oldContacts = ContactData.GetAll();
 
             app.Contacts.InitContactCreation();
             app.Contacts.Create(newData);
             Assert.AreEqual(oldContacts.Count + 1, app.Contacts.GetContactCount());
 
             oldContacts.Add(newData);
-            List<ContactData> newContacts = app.Contacts.GetContactList();
+            List<ContactData> newContacts = ContactData.GetAll();
             oldContacts.Sort();
             newContacts.Sort();
             Assert.AreEqual(oldContacts, newContacts);
