@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using OpenQA.Selenium;
 using WebAddressBookTests;
@@ -39,6 +40,13 @@ namespace addressbook_web_tests.appmanager
             ReturnToGroupsPage();
             return this;
         }
+        public GroupHelper Remove(GroupData group)
+        {
+            SelectGroup(group.Id);
+            RemoveGroup();
+            ReturnToGroupsPage();
+            return this;
+        }
 
         public GroupHelper ReturnToGroupsPage()
         {
@@ -46,6 +54,12 @@ namespace addressbook_web_tests.appmanager
             return this;
         }
 
+        private GroupHelper SelectGroup(String id)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='"+id+"'])")).Click();
+            return this;
+        }
+        
         public GroupHelper SelectGroup(int index)
         {
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index + 1) + "]")).Click();

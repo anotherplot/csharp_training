@@ -79,15 +79,9 @@ namespace WebAddressBookTests
             Console.WriteLine(end.Subtract(start));
 
             start = DateTime.Now;
-            DataConnection.DefaultSettings = new MySettings();
-
-            AddressBookDb db = new AddressBookDb();
-
-            var fromDb = (from g in db.Groups select g).ToList();
-
+            List<GroupData> fromDb = GroupData.GetAll();
             end = DateTime.Now;
             Console.WriteLine(end.Subtract(start));
-            db.Close();
         }
     }
 }

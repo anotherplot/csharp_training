@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using LinqToDB.Data;
 using LinqToDB.Mapping;
 
 namespace WebAddressBookTests
@@ -11,6 +14,13 @@ namespace WebAddressBookTests
         [Column(Name = "group_header")] public string Header { get; set; }
         [Column(Name = "group_footer")] public string Footer { get; set; }
         [Column(Name = "group_id"),PrimaryKey,Identity] public string Id { get; set; }
+
+        public static List<GroupData> GetAll()
+        {
+            DataConnection.DefaultSettings = new MySettings();
+            using AddressBookDb db = new AddressBookDb();
+            return (from g in db.Groups select g).ToList();
+        }
 
         public GroupData(string name)
         {
