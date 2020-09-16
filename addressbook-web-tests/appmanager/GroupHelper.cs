@@ -32,6 +32,16 @@ namespace addressbook_web_tests.appmanager
             ReturnToGroupsPage();
             return this;
         }
+        
+        public GroupHelper Modify(GroupData newData, GroupData group)
+        {
+            SelectGroup(group.Id);
+            InitGroupModification();
+            FillGroupForm(newData);
+            SubmitGroupModification();
+            ReturnToGroupsPage();
+            return this;
+        }
 
         public GroupHelper Remove(int index)
         {
@@ -136,5 +146,6 @@ namespace addressbook_web_tests.appmanager
         {
             return driver.FindElements(By.CssSelector("span.group")).Count;
         }
+        
     }
 }

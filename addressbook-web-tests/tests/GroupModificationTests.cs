@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace WebAddressBookTests
 {
     [TestFixture]
-    public class GroupModificationTests : AuthTestBase
+    public class GroupModificationTests : GroupTestBase
 
     {
         [SetUp]
@@ -20,20 +20,20 @@ namespace WebAddressBookTests
         public void GroupModificationTest()
         {
             GroupData newData = new GroupData("fff");
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
-            GroupData oldData = oldGroups[0];
+            List<GroupData> oldGroups = GroupData.GetAll();
+            GroupData toBeChanged = oldGroups[0];
             
-            app.Groups.Modify(newData, 0);
+            app.Groups.Modify(newData, toBeChanged);
             Assert.AreEqual(oldGroups.Count, app.Groups.GetGroupCount());
             
-            List<GroupData> newGroups = app.Groups.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
             oldGroups[0].Name = newData.Name;
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups,newGroups);
             foreach (var group in newGroups)
             {
-                if (group.Id == oldData.Id)
+                if (group.Id == toBeChanged.Id)
                 {
                     Assert.AreEqual(newData.Name,group.Name);
                 }
