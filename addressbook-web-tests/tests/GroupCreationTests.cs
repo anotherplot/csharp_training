@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml.Serialization;
+using LinqToDB.Data;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
@@ -65,6 +68,26 @@ namespace WebAddressBookTests
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);
+        }
+
+        [Test]
+        public void TestDBConnectivity()
+        {
+            DateTime start = DateTime.Now;
+            var fromUi = app.Groups.GetGroupList();
+            DateTime end = DateTime.Now;
+            Console.WriteLine(end.Subtract(start));
+
+            start = DateTime.Now;
+            DataConnection.DefaultSettings = new MySettings();
+
+            AddressBookDb db = new AddressBookDb();
+
+            var fromDb = (from g in db.Groups select g).ToList();
+
+            end = DateTime.Now;
+            Console.WriteLine(end.Subtract(start));
+            db.Close();
         }
     }
 }
