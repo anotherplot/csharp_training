@@ -12,6 +12,12 @@ namespace WebAddressBookTests
         {
             GroupData group = GroupData.GetAll()[0];
             List<ContactData> oldList = group.GetContacts();
+            IEnumerable<ContactData> contactsNotInGroup = ContactData.GetAll().Except(oldList);
+            if (!contactsNotInGroup.Any())
+            {
+                app.Contacts.InitContactCreation();
+                app.Contacts.Create(new ContactData("test","contact"));
+            }
             ContactData contact = ContactData.GetAll().Except(oldList).First();
 
             app.Contacts.AddContactDataToGroup(contact, group);
