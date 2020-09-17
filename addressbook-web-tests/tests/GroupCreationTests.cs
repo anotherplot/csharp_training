@@ -71,15 +71,10 @@ namespace WebAddressBookTests
         [Test]
         public void TestDBConnectivity()
         {
-            DateTime start = DateTime.Now;
-            var fromUi = app.Groups.GetGroupList();
-            DateTime end = DateTime.Now;
-            Console.WriteLine(end.Subtract(start));
-
-            start = DateTime.Now;
-            List<GroupData> fromDb = GroupData.GetAll();
-            end = DateTime.Now;
-            Console.WriteLine(end.Subtract(start));
+            foreach (var contact in  ContactData.GetAll())
+            {
+                Console.WriteLine(contact.Deprecated);
+            }
         }
     }
 }

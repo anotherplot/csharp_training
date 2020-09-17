@@ -13,14 +13,9 @@ namespace WebAddressBookTests
         [Column(Name = "group_name")] public string Name { get; set; }
         [Column(Name = "group_header")] public string Header { get; set; }
         [Column(Name = "group_footer")] public string Footer { get; set; }
-        [Column(Name = "group_id"),PrimaryKey,Identity] public string Id { get; set; }
 
-        public static List<GroupData> GetAll()
-        {
-            DataConnection.DefaultSettings = new MySettings();
-            using AddressBookDb db = new AddressBookDb();
-            return (from g in db.Groups select g).ToList();
-        }
+        [Column(Name = "group_id"), PrimaryKey, Identity]
+        public string Id { get; set; }
 
         public GroupData(string name)
         {
@@ -61,6 +56,22 @@ namespace WebAddressBookTests
         public override string ToString()
         {
             return "name = " + Name + "\n" + "header = " + Header + "\n" + "footer = " + Footer;
+        }
+
+        public static List<GroupData> GetAll()
+        {
+            DataConnection.DefaultSettings = new MySettings();
+            using AddressBookDb db = new AddressBookDb();
+            return (from g in db.Groups select g).ToList();
+        }
+
+        public List<ContactData> GetContacts()
+        {
+            DataConnection.DefaultSettings = new MySettings();
+            using AddressBookDb db = new AddressBookDb();
+            return (from c in db.Contacts 
+                from gcr in db.GCR.Where(p=>p.GroupId == Id && p.ContactId == c.Id && c.Deprecated == "0000-00-00 00:00:00") 
+                select c).Distinct().ToList();
         }
     }
 }

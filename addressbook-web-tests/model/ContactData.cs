@@ -23,6 +23,7 @@ namespace WebAddressBookTests
         [Column(Name = "address")] public string Address { get; set; }
         [Column(Name = "home")] public string Home { get; set; }
         [Column(Name = "work")] public string Work { get; set; }
+        [Column(Name = "deprecated")] public string Deprecated { get; set; }
 
         public string AllPhones
         {
@@ -126,7 +127,7 @@ namespace WebAddressBookTests
         {
             DataConnection.DefaultSettings = new MySettings();
             using AddressBookDb db = new AddressBookDb();
-            return (from c in db.Contacts select c).ToList();
+            return (from c in db.Contacts.Where(x => x.Deprecated == "0000-00-00 00:00:00") select c).ToList();
         }
     }
 }
