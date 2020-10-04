@@ -46,17 +46,5 @@ namespace mantis_tests
 
             return app.Value;
         }
-
-        // ~ApplicationManager()
-        // {
-        //     try
-        //     {
-        //         driver.Quit();
-        //     }
-        //     catch (Exception)
-        //     {
-        //         // ignored
-        //     }
-        // }
     }
 }

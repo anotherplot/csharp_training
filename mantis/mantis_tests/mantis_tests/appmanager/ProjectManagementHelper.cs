@@ -1,4 +1,7 @@
-﻿using OpenQA.Selenium;
+﻿using System;
+using System.Linq;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace mantis_tests
 {
@@ -19,13 +22,9 @@ namespace mantis_tests
         {
             FillProjectForm(project);
             SubmitProjectCreation();
-            // ProceedAfterCreation();
-        
-        }
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.Url.Contains("manage_proj_page.php"));
 
-        private void ProceedAfterCreation()
-        {
-            throw new System.NotImplementedException();
         }
 
         private void SubmitProjectCreation()
@@ -39,9 +38,10 @@ namespace mantis_tests
             Type(By.Id("project-description"),project.Description);
         }
 
-        public double GetProjectCount()
+        public int GetProjectCount()
         {
-            throw new System.NotImplementedException();
+           // return manager.driver.FindElements(By.XPath("//table[@class='table_results ajax pma_table']/tbody/tr")).Count;
+           return driver.FindElements(By.XPath("//a[contains(@href,'manage_proj_edit_page.php?project_id')]")).Count;
         }
     }
 }

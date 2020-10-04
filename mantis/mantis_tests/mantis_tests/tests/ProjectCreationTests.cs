@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace mantis_tests
 {
@@ -25,13 +29,15 @@ namespace mantis_tests
 
             app.Projects.InitProjectCreation();
             app.Projects.Create(_project);
-            // Assert.AreEqual(oldProjects.Count + 1, app.Projects.GetProjectCount());
-            //
-            // oldProjects.Add(newData);
-            // List<ProjectData> newContacts = ProjectData.GetAll();
-            // oldProjects.Sort();
-            // newContacts.Sort();
-            // Assert.AreEqual(oldProjects, newContacts);
+           
+            
+            Assert.AreEqual(oldProjects.Count + 1, app.Projects.GetProjectCount());
+            
+            oldProjects.Add(_project);
+            List<ProjectData> newProjects = ProjectData.GetAll();
+            oldProjects.Sort();
+            newProjects.Sort();
+            Assert.AreEqual(oldProjects, newProjects);
         }
     }
 }
