@@ -8,11 +8,11 @@ namespace mantis_tests
         {
         }
         
-        public void GoToManageOverwiewPage()
+        public void SelectManageOverviewOption()
         {
             driver.FindElement(By.XPath("//a[contains(@href,'/manage_overview_page.php')]")).Click();
         }        
-        public void GoToProjectManagePage()
+        public void SelectProjectManageTab()
         {
             driver.FindElement(By.XPath("//a[contains(@href,'/manage_proj_page.php')]")).Click();
         }

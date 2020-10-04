@@ -10,8 +10,8 @@ namespace mantis_tests
 
         public void InitProjectCreation()
         {
-           manager.Menu.GoToManageOverwiewPage();
-           manager.Menu.GoToProjectManagePage();
+           manager.Menu.SelectManageOverviewOption();
+           manager.Menu.SelectProjectManageTab();
            manager.driver.FindElements(By.CssSelector("button[type='submit']"))[0].Click();
         }
 
