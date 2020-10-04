@@ -30,12 +30,12 @@ namespace mantis_tests
             driver.FindElement(By.CssSelector("input[type='submit']")).Click();
         }
 
-        protected void SelectOption(By locator, string text)
+        protected void SelectOption(By locator, string option)
         {
-            if (text != null)
+            if (option != null)
             {
                 driver.FindElement(locator).Click();
-                new SelectElement(driver.FindElement(locator)).SelectByText(text);
+                new SelectElement(driver.FindElement(locator)).SelectByValue(option);
             }
         }
         

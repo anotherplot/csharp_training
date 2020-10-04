@@ -14,6 +14,10 @@ namespace mantis_tests
 
         [Column(Name = "id"),PrimaryKey,Identity] public int Id { get; set; }
         
+        public int Status { get; set; }
+        
+        public int State { get; set; }
+        
         public static List<ProjectData> GetAll()
         {
             DataConnection.DefaultSettings = new MySettings();
@@ -51,6 +55,20 @@ namespace mantis_tests
         public override string ToString()
         {
             return "name = " + Name + "\n" + "description = " + Description;
+        }
+        
+       public enum StatusType
+        {
+            Development = 10,
+            Released = 30,
+            Stable = 50,
+            Obsolete = 70
+        }    
+       
+       public enum ViewState
+        {
+            Public = 10,
+            Private = 50
         }
     }
 }

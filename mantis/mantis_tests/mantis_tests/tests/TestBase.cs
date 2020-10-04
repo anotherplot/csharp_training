@@ -26,6 +26,17 @@ namespace mantis_tests
 
             return builder.ToString();
         }
+
+        protected int GenerateRandomProjectStatus()
+        {
+            Array values = Enum.GetValues(typeof(ProjectData.StatusType));
+            return (int) values.GetValue(rnd.Next(values.Length));
+        }      
+        protected int GenerateRandomProjectViewState()
+        {
+            Array values = Enum.GetValues(typeof(ProjectData.ViewState));
+            return (int) values.GetValue(rnd.Next(values.Length));
+        }
         
         [OneTimeTearDown]
         public void TearDownDriver()

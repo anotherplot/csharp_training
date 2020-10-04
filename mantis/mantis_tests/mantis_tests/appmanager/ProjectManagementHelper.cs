@@ -30,6 +30,8 @@ namespace mantis_tests
         {
             Type(By.Id("project-name"),project.Name);
             Type(By.Id("project-description"),project.Description);
+            SelectOption(By.Id("project-status"), project.Status.ToString());
+            SelectOption(By.Id("project-view-state"), project.State.ToString());
         }
 
         public int GetProjectCount()

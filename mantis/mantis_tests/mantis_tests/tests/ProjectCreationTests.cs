@@ -11,16 +11,19 @@ namespace mantis_tests
     public class ProjectCreationTests : AuthTestBase
     {
         private ProjectData _project;
-       
+
         [SetUp]
         public void RandomProjectDataProvider()
         {
-           _project = new ProjectData()
+            _project = new ProjectData()
             {
                 Name = GenerateRandomString(10),
                 Description = GenerateRandomString(100),
+                Status = GenerateRandomProjectStatus(),
+                State = GenerateRandomProjectViewState()
             };
         }
+
 
         [Test]
         public void ProjectCreationTest()
@@ -29,10 +32,9 @@ namespace mantis_tests
 
             app.Menu.GoToProjectsList();
             app.Projects.Create(_project);
-           
-            
+
             Assert.AreEqual(oldProjects.Count + 1, app.Projects.GetProjectCount());
-            
+
             oldProjects.Add(_project);
             List<ProjectData> newProjects = ProjectData.GetAll();
             oldProjects.Sort();
