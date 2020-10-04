@@ -7,7 +7,12 @@ namespace mantis_tests
         public ManagementMenuHelper(ApplicationManager manager) : base(manager)
         {
         }
-        
+
+        public void GoToProjectsList()
+        {
+            SelectManageOverviewOption();
+            SelectProjectManageTab();
+        }
         public void SelectManageOverviewOption()
         {
             driver.FindElement(By.XPath("//a[contains(@href,'/manage_overview_page.php')]")).Click();

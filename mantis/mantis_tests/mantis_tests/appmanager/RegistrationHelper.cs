@@ -5,24 +5,20 @@ namespace mantis_tests
     public class RegistrationHelper : HelperBase
     {
         public RegistrationHelper(ApplicationManager manager) : base(manager)
-        { }
+        {
+        }
 
         public void Register(AccountData account)
         {
             OpenMainPage();
             OpenRegistrationForm();
             FillRegistrationForm(account);
-            SubmitRegistration();
+            ClickSubmitButton();
         }
 
         private void OpenRegistrationForm()
         {
             driver.FindElement(By.XPath("//a[contains(@href,'signup_page.php')]")).Click();
-        }
-
-        private void SubmitRegistration()
-        {
-            driver.FindElement(By.CssSelector("input[type='submit']")).Click();
         }
 
         private void FillRegistrationForm(AccountData account)

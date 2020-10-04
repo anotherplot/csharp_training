@@ -12,13 +12,9 @@ namespace mantis_tests
         {
             OpenMainPage();
             FillLoginData(account.Name, "username");
-            SubmitLoginData();
+            ClickSubmitButton();
             FillLoginData(account.Password,"password");
-            SubmitLoginData();
-        }
-        private void SubmitLoginData()
-        {
-            driver.FindElement(By.CssSelector("input[type='submit']")).Click();
+            ClickSubmitButton();
         }
 
         private void FillLoginData(string accountData, string loginField)

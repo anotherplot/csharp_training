@@ -25,9 +25,9 @@ namespace mantis_tests
         [Test]
         public void ProjectCreationTest()
         {
-             List<ProjectData> oldProjects = ProjectData.GetAll();
+            List<ProjectData> oldProjects = ProjectData.GetAll();
 
-            app.Projects.InitProjectCreation();
+            app.Menu.GoToProjectsList();
             app.Projects.Create(_project);
            
             

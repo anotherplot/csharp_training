@@ -11,25 +11,19 @@ namespace mantis_tests
         {
         }
 
-        public void InitProjectCreation()
+        private void InitProjectCreation()
         {
-           manager.Menu.SelectManageOverviewOption();
-           manager.Menu.SelectProjectManageTab();
-           manager.driver.FindElements(By.CssSelector("button[type='submit']"))[0].Click();
+            manager.driver.FindElements(By.CssSelector("button[type='submit']"))[0].Click();
         }
 
         public void Create(ProjectData project)
         {
+            InitProjectCreation();
             FillProjectForm(project);
-            SubmitProjectCreation();
+            ClickSubmitButton();
             new WebDriverWait(driver, TimeSpan.FromSeconds(10))
                 .Until(d => d.Url.Contains("manage_proj_page.php"));
 
-        }
-
-        private void SubmitProjectCreation()
-        {
-            manager.driver.FindElement(By.CssSelector("input[type='submit']")).Click();
         }
 
         private void FillProjectForm(ProjectData project)
@@ -40,8 +34,29 @@ namespace mantis_tests
 
         public int GetProjectCount()
         {
-           // return manager.driver.FindElements(By.XPath("//table[@class='table_results ajax pma_table']/tbody/tr")).Count;
            return driver.FindElements(By.XPath("//a[contains(@href,'manage_proj_edit_page.php?project_id')]")).Count;
+        }
+
+        public void Remove(ProjectData toBeRemoved)
+        {
+            SelectProject(toBeRemoved.Id);
+            RemoveProject();
+            ClickSubmitButton();
+        }
+
+        private void SelectProject(int id)
+        {
+            driver.FindElement(By.XPath($"//a[@href='manage_proj_edit_page.php?project_id={id}']")).Click();
+        }
+
+        private void RemoveProject()
+        {
+           driver.FindElement(By.Id("project-delete-form")).Click();
+        }
+
+        public bool IsAnyProjectExist()
+        {
+            return IsElementPresent(By.XPath("//a[contains(@href,'manage_proj_edit_page.php?project_id')]"));
         }
     }
 }

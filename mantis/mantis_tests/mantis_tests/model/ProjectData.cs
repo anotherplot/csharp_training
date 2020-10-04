@@ -11,16 +11,14 @@ namespace mantis_tests
     {
         [Column(Name = "name")] public string Name { get; set; }
         [Column(Name = "description")] public string Description { get; set; }
-        
-        [Column(Name = "enabled")] public byte Enabled { get; set; }
-        
+
         [Column(Name = "id"),PrimaryKey,Identity] public int Id { get; set; }
         
         public static List<ProjectData> GetAll()
         {
             DataConnection.DefaultSettings = new MySettings();
             using MantisDB db = new MantisDB();
-            return (from c in db.Projects.Where(x => x.Enabled == 1) select c).ToList();
+            return (from c in db.Projects select c).ToList();
         }
 
         public bool Equals(ProjectData other)

@@ -25,6 +25,11 @@ namespace mantis_tests
             }
         }
 
+        protected void ClickSubmitButton()
+        {
+            driver.FindElement(By.CssSelector("input[type='submit']")).Click();
+        }
+
         protected void SelectOption(By locator, string text)
         {
             if (text != null)
