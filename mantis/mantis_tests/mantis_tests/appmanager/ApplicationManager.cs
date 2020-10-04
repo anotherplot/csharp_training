@@ -12,21 +12,27 @@ namespace mantis_tests
         protected string baseURL;
 
         public string BaseUrl => baseURL;
-        
+
         public IWebDriver Driver => driver;
-        
+
         public RegistrationHelper Registration { get; set; }
         public FtpHelper Ftp { get; set; }
+
+        public LoginHelper Auth { get; set; }
+        public ProjectManagementHelper Projects { get; set; }
+        public ManagementMenuHelper Menu { get; set; }
 
         private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
         private ApplicationManager()
         {
             driver = new FirefoxDriver();
-            baseURL = "http://localhost:8080";
+            baseURL = "http://localhost/mantisbt-2.24.3/mantisbt-2.24.3/";
             Registration = new RegistrationHelper(this);
             Ftp = new FtpHelper(this);
-            
+            Auth = new LoginHelper(this);
+            Menu = new ManagementMenuHelper(this);
+            Projects = new ProjectManagementHelper(this);
         }
 
         public static ApplicationManager GetInstance()
@@ -40,17 +46,17 @@ namespace mantis_tests
 
             return app.Value;
         }
-        
-        ~ApplicationManager()
-        {
-            try
-            {
-                driver.Quit();
-            }
-            catch (Exception)
-            {
-                // ignored
-            }
-        }
+
+        // ~ApplicationManager()
+        // {
+        //     try
+        //     {
+        //         driver.Quit();
+        //     }
+        //     catch (Exception)
+        //     {
+        //         // ignored
+        //     }
+        // }
     }
 }
