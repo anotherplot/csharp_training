@@ -30,5 +30,14 @@ namespace mantis_tests
 
             return result;
         }
+
+        public async Task CreateProject(ProjectData projectData,string login, string password)
+        {
+            MantisConnectPortTypeClient client = new MantisConnectPortTypeClient();
+            Mantis.ProjectData project = new Mantis.ProjectData();
+            project.name = projectData.Name;
+            project.description = projectData.Description;
+            await client.mc_project_addAsync(login,password,project);
+        }
     }
 }

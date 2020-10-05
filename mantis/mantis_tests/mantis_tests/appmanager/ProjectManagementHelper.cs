@@ -60,5 +60,19 @@ namespace mantis_tests
         {
             return IsElementPresent(By.XPath("//a[contains(@href,'manage_proj_edit_page.php?project_id')]"));
         }
+
+        public void WaitForProjectToBeDisplayed(string projectName)
+        {
+            int refreshCount = 10;
+            for (int i = 0; i < refreshCount; i++) { 
+                
+                if (IsElementPresent(By.LinkText(projectName)))
+                {
+                    break;
+                } else {    
+                    driver.Navigate().Refresh();    
+                }     
+            }
+        }
     }
 }

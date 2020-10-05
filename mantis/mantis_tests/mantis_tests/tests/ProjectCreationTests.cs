@@ -30,8 +30,6 @@ namespace mantis_tests
         public void ProjectCreationTest()
         {
             List<ProjectData> oldProjects = APIHelper.GetAllProjects(Login, Password);
-            Console.WriteLine(oldProjects[0]);
-            Console.WriteLine(oldProjects.Count);
 
             app.Menu.GoToProjectsList();
             app.Projects.Create(_project);
@@ -39,7 +37,7 @@ namespace mantis_tests
             Assert.AreEqual(oldProjects.Count + 1, app.Projects.GetProjectCount());
 
             oldProjects.Add(_project);
-            List<ProjectData> newProjects = ProjectData.GetAll();
+            List<ProjectData> newProjects = APIHelper.GetAllProjects(Login, Password);
             oldProjects.Sort();
             newProjects.Sort();
             Assert.AreEqual(oldProjects, newProjects);
