@@ -22,6 +22,8 @@ namespace mantis_tests
         public ProjectManagementHelper Projects { get; set; }
         public ManagementMenuHelper Menu { get; set; }
 
+        public APIHelper API { get; set; }
+
         private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
         private ApplicationManager()
@@ -33,15 +35,16 @@ namespace mantis_tests
             Auth = new LoginHelper(this);
             Menu = new ManagementMenuHelper(this);
             Projects = new ProjectManagementHelper(this);
+            API = new APIHelper(this);
         }
 
         public static ApplicationManager GetInstance()
         {
             if (!app.IsValueCreated)
             {
-                ApplicationManager newInstanse = new ApplicationManager();
-                newInstanse.driver.Url = "http://localhost/mantisbt-2.24.3/mantisbt-2.24.3/login_page.php";
-                app.Value = newInstanse;
+                ApplicationManager newInstance = new ApplicationManager();
+                newInstance.driver.Url = newInstance.baseURL + "login_page.php";
+                app.Value = newInstance;
             }
 
             return app.Value;

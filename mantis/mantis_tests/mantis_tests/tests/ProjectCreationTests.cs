@@ -41,5 +41,11 @@ namespace mantis_tests
             newProjects.Sort();
             Assert.AreEqual(oldProjects, newProjects);
         }
+
+        [Test]
+        public void CreateI()
+        {
+            // app.API.CreateIssue();
+        }
     }
 }
