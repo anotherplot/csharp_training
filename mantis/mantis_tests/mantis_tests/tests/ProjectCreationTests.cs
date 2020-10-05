@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
@@ -28,7 +29,9 @@ namespace mantis_tests
         [Test]
         public void ProjectCreationTest()
         {
-            List<ProjectData> oldProjects = ProjectData.GetAll();
+            List<ProjectData> oldProjects = APIHelper.GetAllProjects(Login, Password);
+            Console.WriteLine(oldProjects[0]);
+            Console.WriteLine(oldProjects.Count);
 
             app.Menu.GoToProjectsList();
             app.Projects.Create(_project);
@@ -40,12 +43,6 @@ namespace mantis_tests
             oldProjects.Sort();
             newProjects.Sort();
             Assert.AreEqual(oldProjects, newProjects);
-        }
-
-        [Test]
-        public void CreateI()
-        {
-            // app.API.CreateIssue();
         }
     }
 }
